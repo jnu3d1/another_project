@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Трекер задач{% endblock %}
+
+{% block content %}
+    <h1>Список задач</h1>
+    <a href="">Новая задача</a>
+    {% for issue in issues %}
+        <p>{{ issue.summary }} <a href="">Подробнее</a></p>
+    {% endfor %}
+{% endblock %}
