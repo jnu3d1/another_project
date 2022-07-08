@@ -41,3 +41,31 @@ class CreateIssue(View):
             new_issue = Issue.objects.create(summary=summary, description=description, status=status, type=type)
             return redirect('issue', pk=new_issue.pk)
         return render(request, 'create.html', {'form': form})
+
+
+class EditIssue(View):
+    def dispatch(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        self.issue = get_object_or_404(Issue, pk=pk)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            form = IssueForm(initial={
+                'summary': self.issue.summary,
+                'description': self.issue.description,
+                'status': self.issue.status,
+                'type': self.issue.type
+            })
+            return render(request, 'edit.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = IssueForm(data=request.POST)
+        if form.is_valid():
+            self.issue.title = form.cleaned_data.get('title')
+            self.issue.description = form.cleaned_data.get('description')
+            self.issue.status = form.cleaned_data.get('status')
+            self.issue.completion_date = form.cleaned_data.get('completion_date')
+            self.issue.save()
+            return redirect('issue', pk=self.issue.pk)
+        return render(request, 'edit.html', {'form': form})
