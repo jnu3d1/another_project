@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 
 from webapp.forms import IssueForm
 from webapp.models import Issue, Status, Type
@@ -69,3 +69,17 @@ class EditIssue(View):
             self.issue.save()
             return redirect('issue', pk=self.issue.pk)
         return render(request, 'edit.html', {'form': form})
+
+
+class DeleteIssue(View):
+    def dispatch(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        self.issue = get_object_or_404(Issue, pk=pk)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, **kwargs):
+        return render(request, 'delete.html', {'issue': self.issue})
+
+    def post(self, request, *args, **kwargs):
+        self.issue.delete()
+        return redirect('index')
