@@ -1,0 +1,104 @@
+[
+{
+    "model": "webapp.issue",
+    "pk": 1,
+    "fields": {
+        "created_at": "2022-07-08T10:22:24.681Z",
+        "updated_at": "2022-07-08T10:22:24.681Z",
+        "summary": "Новая задача",
+        "description": "",
+        "status": 1,
+        "type": 1
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 2,
+    "fields": {
+        "created_at": "2022-07-08T10:23:07.079Z",
+        "updated_at": "2022-07-08T10:23:07.079Z",
+        "summary": "Новая ошибка",
+        "description": "Что вы наделали?!",
+        "status": 1,
+        "type": 2
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 3,
+    "fields": {
+        "created_at": "2022-07-08T10:24:17.860Z",
+        "updated_at": "2022-07-08T10:24:17.860Z",
+        "summary": "Необходимое улучшение",
+        "description": "Сделайте, пожалуйста!",
+        "status": 1,
+        "type": 3
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 4,
+    "fields": {
+        "created_at": "2022-07-08T10:25:05.315Z",
+        "updated_at": "2022-07-08T10:25:05.315Z",
+        "summary": "Задача",
+        "description": "Придется много поработать!",
+        "status": 2,
+        "type": 1
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 5,
+    "fields": {
+        "created_at": "2022-07-08T10:25:59.283Z",
+        "updated_at": "2022-07-08T10:25:59.283Z",
+        "summary": "Ошибка",
+        "description": "Не знаю, как вы это исправите?!",
+        "status": 3,
+        "type": 2
+    }
+},
+{
+    "model": "webapp.status",
+    "pk": 1,
+    "fields": {
+        "name": "New"
+    }
+},
+{
+    "model": "webapp.status",
+    "pk": 2,
+    "fields": {
+        "name": "In Progress"
+    }
+},
+{
+    "model": "webapp.status",
+    "pk": 3,
+    "fields": {
+        "name": "Done"
+    }
+},
+{
+    "model": "webapp.type",
+    "pk": 1,
+    "fields": {
+        "name": "Task"
+    }
+},
+{
+    "model": "webapp.type",
+    "pk": 2,
+    "fields": {
+        "name": "Bug"
+    }
+},
+{
+    "model": "webapp.type",
+    "pk": 3,
+    "fields": {
+        "name": "Enhancement"
+    }
+}
+]
