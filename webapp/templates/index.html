@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Список задач</h1>
-    <a href="">Новая задача</a>
+    <a href="{% url "create" %}">Новая задача</a>
     {% for issue in issues %}
         <p>{{ issue.summary }} <a href="{% url "issue" issue.pk %}">Подробнее</a></p>
     {% endfor %}
