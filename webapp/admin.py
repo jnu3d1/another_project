@@ -6,7 +6,7 @@ from webapp.models import Issue, Status, Type
 
 
 class IssuesAdmin(admin.ModelAdmin):
-    list_display = ['summary', 'status', 'type']
+    list_display = ['summary', 'status']
     list_display_links = ['summary']
     list_filter = ['status', 'type']
     search_fields = ['summary']

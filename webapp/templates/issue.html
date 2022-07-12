@@ -3,29 +3,33 @@
 {% block title %}Задача {{ task.pk }}{% endblock %}
 
 {% block content %}
-    <h3>Краткое описание:</h3>
-    <p>
-        {{ issue.summary }}
-    </p>
-    <h3>Полное описание:</h3>
-    <p>
-        {{ issue.description|default_if_none:"Нет описания" }}
-    </p>
-    <h3>Статус задачи:</h3>
-    <p>
-        {{ issue.status }}
-    </p>
-    <h3>Тип задачи:</h3>
-    <p>
-        {{ issue.type }}
-    </p>
-    <p>
-        <a href="{% url "edit" issue.pk %}">Редактировать задачу</a>
-    </p>
-    <p>
-        <a href="{% url "delete" issue.pk %}">Удалить задачу</a>
-    </p>
-    <p>
-        <a style="color: red;" href="{% url "index" %}"><b>На главную</b></a>
-    </p>
+<h3>Краткое описание:</h3>
+<p>
+    {{ issue.summary }}
+</p>
+<h3>Полное описание:</h3>
+<p>
+    {{ issue.description|default_if_none:"Нет описания" }}
+</p>
+<h3>Статус задачи:</h3>
+<p>
+    {{ issue.status }}
+</p>
+<h3>Типы задачи:</h3>
+{% for type in issue.tepe.all %}
+<p>
+    {{ type.name }}
+</p>
+{% empty %}
+<p>Теги не выставлены</p>
+{% endfor %}
+<p>
+    <a href="{% url " edit" issue.pk %}">Редактировать задачу</a>
+</p>
+<p>
+    <a href="{% url " delete" issue.pk %}">Удалить задачу</a>
+</p>
+<p>
+    <a style="color: red;" href="{% url " index" %}"><b>На главную</b></a>
+</p>
 {% endblock %}
