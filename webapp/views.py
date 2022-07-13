@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.views import View
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView
 
 from webapp.forms import IssueForm
-from webapp.models import Issue, Status, Type
+from webapp.models import Issue
 
 
 class IndexView(TemplateView):
@@ -37,8 +37,9 @@ class CreateIssue(View):
             summary = form.cleaned_data.get('summary')
             description = form.cleaned_data.get('description')
             status = form.cleaned_data.get('status')
-            type = form.cleaned_data.get('type')
-            new_issue = Issue.objects.create(summary=summary, description=description, status=status, type=type)
+            types = form.cleaned_data.pop('types')
+            new_issue = Issue.objects.create(summary=summary, description=description, status=status)
+            new_issue.types.set(types)
             return redirect('issue', pk=new_issue.pk)
         return render(request, 'create.html', {'form': form})
 
@@ -55,17 +56,17 @@ class EditIssue(View):
                 'summary': self.issue.summary,
                 'description': self.issue.description,
                 'status': self.issue.status,
-                'type': self.issue.type
+                'types': self.issue.types.all()
             })
             return render(request, 'edit.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = IssueForm(data=request.POST)
         if form.is_valid():
-            self.issue.title = form.cleaned_data.get('title')
+            self.issue.summary = form.cleaned_data.get('summary')
             self.issue.description = form.cleaned_data.get('description')
             self.issue.status = form.cleaned_data.get('status')
-            self.issue.completion_date = form.cleaned_data.get('completion_date')
+            self.issue.types.set(form.cleaned_data.pop('types'))
             self.issue.save()
             return redirect('issue', pk=self.issue.pk)
         return render(request, 'edit.html', {'form': form})

@@ -15,10 +15,14 @@
     <p>
         {{ issue.status }}
     </p>
-    <h3>Тип задачи:</h3>
-    <p>
-        {{ issue.type }}
-    </p>
+    <h3>Типы задачи:</h3>
+    {% for type in issue.types.all %}
+        <p>
+            {{ type.name }}
+        </p>
+    {% empty %}
+        <p>Типы не выставлены</p>
+    {% endfor %}
     <p>
         <a href="{% url "edit" issue.pk %}">Редактировать задачу</a>
     </p>

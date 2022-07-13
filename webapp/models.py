@@ -16,9 +16,7 @@ class Issue(BaseModel):
     description = models.TextField(blank=True, max_length=3000, verbose_name='Полное описание')
     status = models.ForeignKey('webapp.Status', on_delete=models.PROTECT, related_name='statuses',
                                verbose_name='Статус')
-    # type = models.ForeignKey('webapp.Type', on_delete=models.PROTECT, related_name='types', verbose_name='Тип')
-    type = models.ManyToManyField('webapp.Type', related_name='issues', through='webapp.IssueType',
-                                  through_fields=('issue', 'type'), blank=True)
+    types = models.ManyToManyField('webapp.Type', related_name='issues', blank=True)
 
     def __str__(self):
         return f'{self.id} {self.summary} {self.status}'
@@ -51,8 +49,3 @@ class Type(models.Model):
         db_table = 'types'
         verbose_name = 'Тип задачи'
         verbose_name_plural = 'Типы задач'
-
-
-class IssueType(models.Model):
-    issue = models.ForeignKey('webapp.Issue', related_name='issue', on_delete=models.CASCADE, verbose_name='Задача')
-    type = models.ForeignKey('webapp.Type', related_name='type', on_delete=models.CASCADE, verbose_name='Тип')
