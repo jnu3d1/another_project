@@ -6,11 +6,11 @@ from webapp.models import Issue, Status, Type
 
 
 class IssuesAdmin(admin.ModelAdmin):
-    list_display = ['summary', 'status', 'type']
+    list_display = ['summary', 'status']
     list_display_links = ['summary']
     list_filter = ['status', 'type']
     search_fields = ['summary']
-    fields = ['summary', 'description', 'status', 'type', 'created_at', 'updated_at']
+    fields = ['summary', 'description', 'status', 'created_at', 'updated_at']
     readonly_fields = ['created_at', 'updated_at']
 
 

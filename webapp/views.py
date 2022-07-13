@@ -12,7 +12,7 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
     def get(self, request):
-        issues = Issue.objects.order_by('-status')
+        issues = Issue.objects.order_by('status')
         return render(request, 'index.html', {'issues': issues})
 
 
