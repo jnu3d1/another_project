@@ -1,62 +1,90 @@
 [
 {
     "model": "webapp.issue",
-    "pk": 1,
+    "pk": 6,
     "fields": {
-        "created_at": "2022-07-08T10:22:24.681Z",
-        "updated_at": "2022-07-08T10:22:24.681Z",
-        "summary": "Новая задача",
+        "created_at": "2022-07-13T04:18:23.467Z",
+        "updated_at": "2022-07-13T10:51:00.937Z",
+        "summary": "Задача 1",
+        "description": "Описание задачи",
+        "status": 1,
+        "types": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 7,
+    "fields": {
+        "created_at": "2022-07-13T04:18:39.441Z",
+        "updated_at": "2022-07-13T04:18:39.441Z",
+        "summary": "Задача 2",
         "description": "",
-        "status": 1,
-        "type": 1
-    }
-},
-{
-    "model": "webapp.issue",
-    "pk": 2,
-    "fields": {
-        "created_at": "2022-07-08T10:23:07.079Z",
-        "updated_at": "2022-07-08T10:23:07.079Z",
-        "summary": "Новая ошибка",
-        "description": "Что вы наделали?!",
-        "status": 1,
-        "type": 2
-    }
-},
-{
-    "model": "webapp.issue",
-    "pk": 3,
-    "fields": {
-        "created_at": "2022-07-08T10:24:17.860Z",
-        "updated_at": "2022-07-08T10:24:17.860Z",
-        "summary": "Необходимое улучшение",
-        "description": "Сделайте, пожалуйста!",
-        "status": 1,
-        "type": 3
-    }
-},
-{
-    "model": "webapp.issue",
-    "pk": 4,
-    "fields": {
-        "created_at": "2022-07-08T10:25:05.315Z",
-        "updated_at": "2022-07-08T10:25:05.315Z",
-        "summary": "Задача",
-        "description": "Придется много поработать!",
         "status": 2,
-        "type": 1
+        "types": [
+            1,
+            3
+        ]
     }
 },
 {
     "model": "webapp.issue",
-    "pk": 5,
+    "pk": 8,
     "fields": {
-        "created_at": "2022-07-08T10:25:59.283Z",
-        "updated_at": "2022-07-08T10:25:59.283Z",
-        "summary": "Ошибка",
-        "description": "Не знаю, как вы это исправите?!",
+        "created_at": "2022-07-13T04:23:10.525Z",
+        "updated_at": "2022-07-13T04:23:10.525Z",
+        "summary": "Невыполнимая задача",
+        "description": "Осуществить невыполнимое.",
         "status": 3,
-        "type": 2
+        "types": []
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 9,
+    "fields": {
+        "created_at": "2022-07-13T04:23:33.106Z",
+        "updated_at": "2022-07-13T04:23:33.106Z",
+        "summary": "Задача 3",
+        "description": "",
+        "status": 2,
+        "types": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 10,
+    "fields": {
+        "created_at": "2022-07-13T04:24:39.987Z",
+        "updated_at": "2022-07-13T04:24:39.988Z",
+        "summary": "Задача 4",
+        "description": "Полное описание задачи",
+        "status": 1,
+        "types": [
+            1,
+            3
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 11,
+    "fields": {
+        "created_at": "2022-07-13T09:52:06.389Z",
+        "updated_at": "2022-07-13T10:50:47.082Z",
+        "summary": "Задача 5",
+        "description": "Приложить все усилия для выполнения задачи",
+        "status": 1,
+        "types": [
+            1,
+            2,
+            3
+        ]
     }
 },
 {
