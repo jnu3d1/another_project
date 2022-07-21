@@ -2,18 +2,24 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from webapp.forms import IssueForm
 from webapp.models import Issue
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
+    model = Issue
     template_name = 'index.html'
+    context_object_name = 'issues'
+    paginate_by = 10
 
-    def get(self, request):
-        issues = Issue.objects.order_by('status')
-        return render(request, 'index.html', {'issues': issues})
+    def get_queryset(self):
+        return super().get_queryset().order_by('status', '-updated_at')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        return context
 
 
 class IssueView(TemplateView):

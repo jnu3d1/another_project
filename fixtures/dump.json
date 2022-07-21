@@ -73,17 +73,101 @@
 },
 {
     "model": "webapp.issue",
-    "pk": 11,
+    "pk": 21,
     "fields": {
-        "created_at": "2022-07-13T09:52:06.389Z",
-        "updated_at": "2022-07-13T10:50:47.082Z",
+        "created_at": "2022-07-19T10:03:34.447Z",
+        "updated_at": "2022-07-19T10:03:34.447Z",
         "summary": "Задача 5",
-        "description": "Приложить все усилия для выполнения задачи",
+        "description": "***Задача 5***",
+        "status": 1,
+        "types": [
+            1
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 22,
+    "fields": {
+        "created_at": "2022-07-19T11:38:09.102Z",
+        "updated_at": "2022-07-19T11:38:09.102Z",
+        "summary": "Задача 6",
+        "description": "",
+        "status": 2,
+        "types": [
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 23,
+    "fields": {
+        "created_at": "2022-07-19T12:02:28.674Z",
+        "updated_at": "2022-07-19T12:02:28.674Z",
+        "summary": "Bug",
+        "description": "",
+        "status": 2,
+        "types": [
+            1
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 24,
+    "fields": {
+        "created_at": "2022-07-19T12:11:47.493Z",
+        "updated_at": "2022-07-19T12:24:51.350Z",
+        "summary": "Bug",
+        "description": "Bug",
+        "status": 3,
+        "types": [
+            2
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 25,
+    "fields": {
+        "created_at": "2022-07-21T09:54:04.227Z",
+        "updated_at": "2022-07-21T09:54:04.227Z",
+        "summary": "Enhancement",
+        "description": "",
         "status": 1,
         "types": [
             1,
-            2,
             3
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 26,
+    "fields": {
+        "created_at": "2022-07-21T09:54:41.659Z",
+        "updated_at": "2022-07-21T09:54:41.659Z",
+        "summary": "Enhancement",
+        "description": "***Enhancement***",
+        "status": 3,
+        "types": [
+            3
+        ]
+    }
+},
+{
+    "model": "webapp.issue",
+    "pk": 27,
+    "fields": {
+        "created_at": "2022-07-21T09:55:26.074Z",
+        "updated_at": "2022-07-21T09:55:26.074Z",
+        "summary": "Task",
+        "description": "",
+        "status": 2,
+        "types": [
+            1
         ]
     }
 },

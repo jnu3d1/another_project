@@ -8,4 +8,7 @@
     {% for issue in issues %}
         <p>{{ issue.summary }} <a href="{% url "issue" issue.pk %}">Подробнее</a></p>
     {% endfor %}
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 {% endblock %}
