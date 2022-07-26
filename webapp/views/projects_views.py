@@ -1,5 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
 
+from webapp.forms import ProjectForm
 from webapp.models import Project
 
 
@@ -18,3 +20,11 @@ class ProjectView(DetailView):
         context = super().get_context_data(**kwargs)
         context['issues'] = self.object.issues.order_by('status', '-updated_at')
         return context
+
+
+class CreateProject(CreateView):
+    form_class = ProjectForm
+    template_name = 'projects/create.html'
+
+    def get_success_url(self):
+        return reverse('project', kwargs={'pk': self.object.pk})

@@ -26,6 +26,7 @@
         <a href="{% url "projects" %}">Удалить проект</a>
     </p>
     <hr>
+    <p><a href="{% url "create" project.pk %}">Новая задача</a></p>
     <h3>Задачи проекта:</h3>
     {% for issue in issues %}
         <p>

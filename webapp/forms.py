@@ -2,7 +2,18 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import widgets
 
-from webapp.models import Issue
+from webapp.models import Issue, Project
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'description', 'start_date', 'end_date']
+        widgets = {
+            'description': widgets.Textarea,
+            'start_date': widgets.SelectDateWidget,
+            'end_date': widgets.SelectDateWidget
+        }
 
 
 class IssueForm(forms.ModelForm):

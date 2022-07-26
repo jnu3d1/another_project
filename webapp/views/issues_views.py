@@ -2,12 +2,13 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
+from django.urls import reverse
 from django.utils.http import urlencode
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 
 from webapp.forms import IssueForm, SearchForm
-from webapp.models import Issue
+from webapp.models import Issue, Project
 
 
 class IndexView(ListView):
@@ -54,22 +55,17 @@ class IssueView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
-class CreateIssue(View):
-    def get(self, request):
-        form = IssueForm()
-        return render(request, 'issues/create.html', {'form': form})
+class CreateIssue(CreateView):
+    form_class = IssueForm
+    template_name = 'issues/create.html'
 
-    def post(self, request):
-        form = IssueForm(data=request.POST)
-        if form.is_valid():
-            summary = form.cleaned_data.get('summary')
-            description = form.cleaned_data.get('description')
-            status = form.cleaned_data.get('status')
-            types = form.cleaned_data.pop('types')
-            new_issue = Issue.objects.create(summary=summary, description=description, status=status)
-            new_issue.types.set(types)
-            return redirect('issue', pk=new_issue.pk)
-        return render(request, 'issues/create.html', {'form': form})
+    def form_valid(self, form):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        form.instance.project = project
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('project', kwargs={'pk': self.object.project.pk})
 
 
 class EditIssue(View):
@@ -111,4 +107,4 @@ class DeleteIssue(View):
 
     def post(self, request, *args, **kwargs):
         self.issue.delete()
-        return redirect('index')
+        return redirect('projects')
