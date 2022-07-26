@@ -8,5 +8,6 @@ urlpatterns = [
     path('issues/add/', CreateIssue.as_view(), name='create'),
     path('issue/<int:pk>/editing/', EditIssue.as_view(), name='edit'),
     path('issue/<int:pk>/delete/', DeleteIssue.as_view(), name='delete'),
-    path('', ProjectsView.as_view(), name='projects')
+    path('', ProjectsView.as_view(), name='projects'),
+    path('project/<int:pk>/', ProjectView.as_view(), name='project'),
 ]

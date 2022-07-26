@@ -6,6 +6,6 @@
     <h1>Список проектов</h1>
     <p><a href="{% url "create" %}">Новый проект</a></p>
     {% for project in projects %}
-        <p>{{ project.name }} <a href="{% url "projects" %}">Подробнее</a></p>
+        <p>{{ project.name }} <a href="{% url "project" project.pk %}">Подробнее</a></p>
     {% endfor %}
 {% endblock %}

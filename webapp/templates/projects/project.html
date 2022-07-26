@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Проект {{ project.pk }}{% endblock %}
+
+{% block content %}
+    <h3>Название проекта:</h3>
+    <p>
+        {{ project.name }}
+    </p>
+    <h3>Описание:</h3>
+    <p>
+        {{ project.description|default_if_none:"Нет описания" }}
+    </p>
+    <h3>Дата начала:</h3>
+    <p>
+        {{ project.start_date }}
+    </p>
+    <h3>Дата окончания:</h3>
+    <p>
+        {{ project.end_date|default_if_none:"Дата не выставлена" }}
+    </p>
+    <p>
+        <a href="{% url "projects" %}">Редактировать проект</a>
+    </p>
+    <p>
+        <a href="{% url "projects" %}">Удалить проект</a>
+    </p>
+    <hr>
+    <h3>Задачи проекта:</h3>
+    {% for issue in issues %}
+        <p>
+            {{ issue.summary }} <a href="{% url "issue" issue.pk %}">Подробнее</a>
+        </p>
+    {% empty %}
+        <p>В этом проекте не создано ни одной зачачи</p>
+    {% endfor %}
+    <hr>
+    <p>
+        <a style="color: red;" href="{% url "projects" %}"><b>На главную</b></a>
+    </p>
+{% endblock %}
