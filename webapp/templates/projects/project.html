@@ -20,7 +20,7 @@
         {{ project.end_date|default_if_none:"Дата не выставлена" }}
     </p>
     <p>
-        <a href="{% url "projects" %}">Редактировать проект</a>
+        <a href="{% url "edit_project" project.pk %}">Редактировать проект</a>
     </p>
     <p>
         <a href="{% url "projects" %}">Удалить проект</a>

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Изменение проекта "{{ project.name }}"{% endblock %}
+
+{% block content %}
+    <h1>Изменить проект</h1>
+    <form action="" method="post">
+        {% include "partial/form.html"  with button_text="Изменить" %}
+    </form><br/>
+    <a href="{% url "project" project.pk %}">На страницу проекта</a>
+{% endblock %}
