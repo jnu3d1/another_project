@@ -2,7 +2,6 @@ from django.db import models
 
 
 # Create your models here.
-from django.urls import reverse
 
 
 class BaseModel(models.Model):
@@ -21,9 +20,6 @@ class Project(models.Model):
 
     def __str__(self):
         return f'{self.id} {self.name}'
-
-    # def get_absolute_url(self):
-    #     return reverse('project', kwargs={'pk': self.pk})
 
     class Meta:
         db_table = 'projects'

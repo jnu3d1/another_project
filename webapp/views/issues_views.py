@@ -1,10 +1,10 @@
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.views import View
+
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import IssueForm, SearchForm
@@ -77,51 +77,9 @@ class EditIssue(UpdateView):
         return reverse('project', kwargs={'pk': self.object.project.pk})
 
 
-# class EditIssue(View):
-#     def dispatch(self, request, *args, **kwargs):
-#         pk = kwargs.get('pk')
-#         self.issue = get_object_or_404(Issue, pk=pk)
-#         return super().dispatch(request, *args, **kwargs)
-#
-#     def get(self, request, *args, **kwargs):
-#         if request.method == 'GET':
-#             form = IssueForm(initial={
-#                 'summary': self.issue.summary,
-#                 'description': self.issue.description,
-#                 'status': self.issue.status,
-#                 'types': self.issue.types.all()
-#             })
-#             return render(request, 'issues/edit.html', {'form': form})
-#
-#     def post(self, request, *args, **kwargs):
-#         form = IssueForm(data=request.POST)
-#         if form.is_valid():
-#             self.issue.summary = form.cleaned_data.get('summary')
-#             self.issue.description = form.cleaned_data.get('description')
-#             self.issue.status = form.cleaned_data.get('status')
-#             self.issue.types.set(form.cleaned_data.pop('types'))
-#             self.issue.save()
-#             return redirect('issue', pk=self.issue.pk)
-#         return render(request, 'issues/edit.html', {'form': form})
-
-
 class DeleteIssue(DeleteView):
     model = Issue
     template_name = 'issues/delete.html'
 
     def get_success_url(self):
         return reverse('project', kwargs={'pk': self.object.project.pk})
-
-
-# class DeleteIssue(View):
-#     def dispatch(self, request, *args, **kwargs):
-#         pk = kwargs.get('pk')
-#         self.issue = get_object_or_404(Issue, pk=pk)
-#         return super().dispatch(request, *args, **kwargs)
-#
-#     def get(self, request, **kwargs):
-#         return render(request, 'issues/delete.html', {'issue': self.issue})
-#
-#     def post(self, request, *args, **kwargs):
-#         self.issue.delete()
-#         return redirect('projects')
