@@ -23,7 +23,7 @@
         <a href="{% url "edit_project" project.pk %}">Редактировать проект</a>
     </p>
     <p>
-        <a href="{% url "projects" %}">Удалить проект</a>
+        <a href="{% url "delete_project" project.pk %}">Удалить проект</a>
     </p>
     <hr>
     <p><a href="{% url "create" project.pk %}">Новая задача</a></p>

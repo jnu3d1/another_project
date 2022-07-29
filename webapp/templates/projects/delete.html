@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Подтверждение{% endblock %}
+
+{% block content %}
+    <h1>Вы уверены, что хотите удалить проект "{{ project.name }}"?</h1>
+    <form style="display: inline-block;" action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Однозначно!</button>
+    </form>
+    <form style="display: inline-block;" action="{% url "project" project.pk %}">
+        <button>Ответ отрицательный</button>
+    </form>
+{% endblock %}
