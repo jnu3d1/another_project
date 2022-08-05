@@ -23,12 +23,10 @@
     {% empty %}
         <p>Типы не выставлены</p>
     {% endfor %}
-    <p>
-        <a href="{% url "webapp:edit" issue.pk %}">Редактировать задачу</a>
-    </p>
-    <p>
-        <a href="{% url "webapp:delete" issue.pk %}">Удалить задачу</a>
-    </p>
+    {% if user.is_authenticated %}
+        <p><a href="{% url "webapp:edit" issue.pk %}">Редактировать задачу</a></p>
+        <p><a href="{% url "webapp:delete" issue.pk %}">Удалить задачу</a></p>
+    {% endif %}
     <p>
         <a style="color: red;" href="{% url "webapp:project" issue.project.pk %}"><b>На страницу проекта</b></a>
     </p>

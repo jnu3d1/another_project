@@ -10,10 +10,12 @@
     <title>{% block title %}Document{% endblock %}</title>
 </head>
 <body>
-{% if request.user.is_authenticated %}
-    <p><a href={% url "accounts:logout" %}>Выход</a></p>
-{% else %}
-    <p><a href="{% url "accounts:login" %}">Вход</a></p>
+{% if request.path != "/accounts/login/" %}
+    {% if request.user.is_authenticated %}
+        <p><a href={% url "accounts:logout" %}>Выход</a></p>
+    {% else %}
+        <p><a href="{% url "accounts:login" %}">Вход</a></p>
+    {% endif %}
 {% endif %}
 {% block content %}
 {% endblock %}

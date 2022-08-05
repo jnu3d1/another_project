@@ -24,7 +24,9 @@
         <p><a href="{% url "webapp:delete_project" project.pk %}">Удалить проект</a></p>
     {% endif %}
     <hr>
-    <p><a href="{% url "webapp:create" project.pk %}">Новая задача</a></p>
+    {% if user.is_authenticated %}
+        <p><a href="{% url "webapp:create" project.pk %}">Новая задача</a></p>
+    {% endif %}
     <h3>Задачи проекта:</h3>
     {% for issue in issues %}
         <p>

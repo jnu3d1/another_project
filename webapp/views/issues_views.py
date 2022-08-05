@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
@@ -55,7 +57,7 @@ class IssueView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
-class CreateIssue(CreateView):
+class CreateIssue(LoginRequiredMixin, CreateView):
     form_class = IssueForm
     template_name = 'issues/create.html'
 
@@ -68,7 +70,7 @@ class CreateIssue(CreateView):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
-class EditIssue(UpdateView):
+class EditIssue(LoginRequiredMixin, UpdateView):
     form_class = IssueForm
     model = Issue
     template_name = 'issues/edit.html'
@@ -77,7 +79,7 @@ class EditIssue(UpdateView):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
-class DeleteIssue(DeleteView):
+class DeleteIssue(LoginRequiredMixin, DeleteView):
     model = Issue
     template_name = 'issues/delete.html'
 
