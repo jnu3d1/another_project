@@ -5,9 +5,9 @@
 {% block content %}
     <h1>Список задач</h1>
     {% include 'partial/simple_search.html' %}
-    <p><a href="{% url "create" %}">Новая задача</a></p>
+    <p><a href="{% url "webapp:create" %}">Новая задача</a></p>
     {% for issue in issues %}
-        <p>{{ issue.summary }} <a href="{% url "issue" issue.pk %}">Подробнее</a></p>
+        <p>{{ issue.summary }} <a href="{% url "webapp:issue" issue.pk %}">Подробнее</a></p>
     {% endfor %}
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}

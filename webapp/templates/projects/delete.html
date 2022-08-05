@@ -8,7 +8,7 @@
         {% csrf_token %}
         <button type="submit">Однозначно!</button>
     </form>
-    <form style="display: inline-block;" action="{% url "project" project.pk %}">
+    <form style="display: inline-block;" action="{% url "webapp:project" project.pk %}">
         <button>Ответ отрицательный</button>
     </form>
 {% endblock %}

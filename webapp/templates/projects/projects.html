@@ -4,8 +4,10 @@
 
 {% block content %}
     <h1>Список проектов</h1>
-    <p><a href="{% url "create_project" %}">Новый проект</a></p>
+    {% if user.is_authenticated %}
+        <p><a href="{% url "webapp:create_project" %}">Новый проект</a></p>
+    {% endif %}
     {% for project in projects %}
-        <p>{{ project.name }} <a href="{% url "project" project.pk %}">Подробнее</a></p>
+        <p>{{ project.name }} <a href="{% url "webapp:project" project.pk %}">Подробнее</a></p>
     {% endfor %}
 {% endblock %}

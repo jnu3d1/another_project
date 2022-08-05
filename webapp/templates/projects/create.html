@@ -7,5 +7,5 @@
     <form action="" method="post">
         {% include "partial/form.html"  with button_text="Создать" %}
     </form><br/>
-    <a href="{% url "projects" %}">На главную</a>
+    <a href="{% url "webapp:projects" %}">На главную</a>
 {% endblock %}

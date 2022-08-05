@@ -65,7 +65,7 @@ class CreateIssue(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('project', kwargs={'pk': self.object.project.pk})
+        return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
 class EditIssue(UpdateView):
@@ -74,7 +74,7 @@ class EditIssue(UpdateView):
     template_name = 'issues/edit.html'
 
     def get_success_url(self):
-        return reverse('project', kwargs={'pk': self.object.project.pk})
+        return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
 class DeleteIssue(DeleteView):
@@ -82,4 +82,4 @@ class DeleteIssue(DeleteView):
     template_name = 'issues/delete.html'
 
     def get_success_url(self):
-        return reverse('project', kwargs={'pk': self.object.project.pk})
+        return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
