@@ -14,10 +14,10 @@
     <p><a href="{% url "accounts:logout" %}">Выход</a></p>
 {% else %}
     {% if request.path != "/accounts/login/" %}
-        <p><a href="{% url "accounts:login" %}?next={{ request.get_full_path }}">Вход</a></p>
+        <p><a href="{% url "accounts:login" %}?next={{ request.path }}">Вход</a></p>
     {% endif %}
     {% if request.path != "/accounts/create/" %}
-        <p><a href="{% url "accounts:create" %}?next={{ request.get_full_path }}">Регистрация</a></p>
+        <p><a href="{% url "accounts:create" %}?next={{ request.path }}">Регистрация</a></p>
     {% endif %}
 {% endif %}
 {% block content %}
