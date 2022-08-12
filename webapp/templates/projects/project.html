@@ -11,6 +11,10 @@
     <p>
         {{ project.description|default_if_none:"Нет описания" }}
     </p>
+    <h3 style="color: green;">Участники проекта:</h3>
+    {% for user in project.users.all %}
+        |{{ user }}|
+    {% endfor %}
     <h3>Дата начала:</h3>
     <p>
         {{ project.start_date }}

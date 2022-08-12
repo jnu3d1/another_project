@@ -20,6 +20,7 @@ class Project(models.Model):
     description = models.TextField(blank=True, max_length=3000, verbose_name='Полное описание')
     author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT, related_name='projects',
                                verbose_name='Автор')
+    users = models.ManyToManyField(get_user_model(), related_name='porject', verbose_name='Пользователи')
 
     def __str__(self):
         return f'{self.id} {self.name}'
