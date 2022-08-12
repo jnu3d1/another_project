@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -42,10 +42,14 @@ class CreateProject(CreateView):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})
 
 
-class EditProject(LoginRequiredMixin, UpdateView):
+class EditProject(PermissionRequiredMixin, UpdateView):
     form_class = ProjectForm
     model = Project
+    # permission_required = 'webapp.change_project'
     template_name = 'projects/edit.html'
+
+    def has_permission(self):
+        return self.request.user.has_perm('webapp.change_project') or self.request.user == self.get_object().author
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})
