@@ -24,11 +24,15 @@
         {{ project.end_date|default_if_none:"Дата не выставлена" }}
     </p>
     {% if user.is_authenticated %}
-        <p><a href="{% url "webapp:edit_project" project.pk %}">Редактировать проект</a></p>
-        <p><a href="{% url "webapp:delete_project" project.pk %}">Удалить проект</a></p>
+        {% if perms.webapp.change_project %}
+            <p><a href="{% url "webapp:edit_project" project.pk %}">Редактировать проект</a></p>
+        {% endif %}
+        {% if perms.webapp.delete_project %}
+            <p><a href="{% url "webapp:delete_project" project.pk %}">Удалить проект</a></p>
+        {% endif %}
     {% endif %}
     <hr>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and perms.webapp.add_issue %}
         <p><a href="{% url "webapp:create" project.pk %}">Новая задача</a></p>
     {% endif %}
     <h3>Задачи проекта:</h3>

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -29,8 +30,11 @@ class CreateProject(CreateView):
     template_name = 'projects/create.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user.has_perm('webapp.add_project'):
-            return super().dispatch(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            if request.user.has_perm('webapp.add_project'):
+                return super().dispatch(request, *args, **kwargs)
+            else:
+                raise PermissionDenied
         return redirect('accounts:login')
 
     def form_valid(self, form):
@@ -45,17 +49,15 @@ class CreateProject(CreateView):
 class EditProject(PermissionRequiredMixin, UpdateView):
     form_class = ProjectForm
     model = Project
-    # permission_required = 'webapp.change_project'
+    permission_required = 'webapp.change_project'
     template_name = 'projects/edit.html'
-
-    def has_permission(self):
-        return self.request.user.has_perm('webapp.change_project') or self.request.user == self.get_object().author
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})
 
 
-class DeleteProject(LoginRequiredMixin, DeleteView):
+class DeleteProject(PermissionRequiredMixin, DeleteView):
     model = Project
-    template_name = 'projects/delete.html'
+    permission_required = 'webapp.delete_project'
     success_url = reverse_lazy('webapp:projects')
+    template_name = 'projects/delete.html'

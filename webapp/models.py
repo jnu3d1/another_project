@@ -27,6 +27,9 @@ class Project(models.Model):
 
     class Meta:
         db_table = 'projects'
+        permissions = [
+            ('custom_permission', 'Менять участников проекта')
+        ]
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
 

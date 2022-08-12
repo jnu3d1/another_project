@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
@@ -57,9 +57,13 @@ class IssueView(TemplateView):
         return super().get_context_data(**kwargs)
 
 
-class CreateIssue(LoginRequiredMixin, CreateView):
+class CreateIssue(PermissionRequiredMixin, CreateView):
     form_class = IssueForm
+    permission_required = 'webapp.add_issue'
     template_name = 'issues/create.html'
+
+    def has_permission(self):
+        return super().has_permission()
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -72,17 +76,19 @@ class CreateIssue(LoginRequiredMixin, CreateView):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
-class EditIssue(LoginRequiredMixin, UpdateView):
+class EditIssue(PermissionRequiredMixin, UpdateView):
     form_class = IssueForm
     model = Issue
+    permission_required = 'webapp.change_issue'
     template_name = 'issues/edit.html'
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
 
-class DeleteIssue(LoginRequiredMixin, DeleteView):
+class DeleteIssue(PermissionRequiredMixin, DeleteView):
     model = Issue
+    permission_required = 'webapp.delete_issue'
     template_name = 'issues/delete.html'
 
     def get_success_url(self):
