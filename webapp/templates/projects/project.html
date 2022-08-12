@@ -24,6 +24,9 @@
         {{ project.end_date|default_if_none:"Дата не выставлена" }}
     </p>
     {% if user.is_authenticated %}
+        {% if perms.webapp.custom_permission %}
+            <p><a href="{% url "webapp:project_users" project.pk %}">Изменить состав участников</a></p>
+        {% endif %}
         {% if perms.webapp.change_project %}
             <p><a href="{% url "webapp:edit_project" project.pk %}">Редактировать проект</a></p>
         {% endif %}

@@ -1,10 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from webapp.forms import ProjectForm
+from webapp.forms import ProjectForm, ProjectUsersForm
 from webapp.models import Project
 
 
@@ -61,3 +61,13 @@ class DeleteProject(PermissionRequiredMixin, DeleteView):
     permission_required = 'webapp.delete_project'
     success_url = reverse_lazy('webapp:projects')
     template_name = 'projects/delete.html'
+
+
+class ProjectUsersView(PermissionRequiredMixin, UpdateView):
+    form_class = ProjectUsersForm
+    model = Project
+    permission_required = 'webapp.custom_permission'
+    template_name = 'projects/project_users.html'
+
+    def get_success_url(self):
+        return reverse('webapp:project', kwargs={'pk': self.object.pk})

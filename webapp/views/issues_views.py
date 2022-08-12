@@ -1,5 +1,4 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
@@ -82,6 +81,9 @@ class EditIssue(PermissionRequiredMixin, UpdateView):
     permission_required = 'webapp.change_issue'
     template_name = 'issues/edit.html'
 
+    def has_permission(self):
+        return super().has_permission()
+
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
 
@@ -90,6 +92,9 @@ class DeleteIssue(PermissionRequiredMixin, DeleteView):
     model = Issue
     permission_required = 'webapp.delete_issue'
     template_name = 'issues/delete.html'
+
+    def has_permission(self):
+        return super().has_permission()
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
