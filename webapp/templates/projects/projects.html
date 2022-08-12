@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Список проектов</h1>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and perms.webapp.add_project %}
         <p><a href="{% url "webapp:create_project" %}">Новый проект</a></p>
     {% endif %}
     {% for project in projects %}

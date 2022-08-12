@@ -29,9 +29,14 @@ class CreateProject(CreateView):
     template_name = 'projects/create.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.user.has_perm('webapp.add_project'):
             return super().dispatch(request, *args, **kwargs)
         return redirect('accounts:login')
+
+    def form_valid(self, form):
+        author = self.request.user
+        form.instance.author = author
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})

@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -17,6 +18,8 @@ class Project(models.Model):
     end_date = models.DateField(blank=True, null=True, verbose_name='Конец')
     name = models.CharField(max_length=50, verbose_name='Название проекта')
     description = models.TextField(blank=True, max_length=3000, verbose_name='Полное описание')
+    author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT, related_name='projects',
+                               verbose_name='Автор')
 
     def __str__(self):
         return f'{self.id} {self.name}'
@@ -35,6 +38,8 @@ class Issue(BaseModel):
     types = models.ManyToManyField('webapp.Type', related_name='issues', blank=True)
     project = models.ForeignKey('webapp.Project', on_delete=models.CASCADE, related_name='issues',
                                 verbose_name='Проект')
+    author = models.ForeignKey(get_user_model(), default=1, on_delete=models.SET_DEFAULT, related_name='issues',
+                               verbose_name='Автор')
 
     def __str__(self):
         return f'{self.id} {self.summary} {self.status} {self.project}'

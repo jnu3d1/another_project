@@ -63,7 +63,9 @@ class CreateIssue(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        author = self.request.user
         form.instance.project = project
+        form.instance.author = author
         return super().form_valid(form)
 
     def get_success_url(self):
