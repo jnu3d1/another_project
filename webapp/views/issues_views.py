@@ -62,7 +62,7 @@ class CreateIssue(PermissionRequiredMixin, CreateView):
     template_name = 'issues/create.html'
 
     def has_permission(self):
-        return super().has_permission()
+        return super().has_permission() and Project.users.through.objects.filter(user_id=self.request.user.pk).exists()
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -82,7 +82,7 @@ class EditIssue(PermissionRequiredMixin, UpdateView):
     template_name = 'issues/edit.html'
 
     def has_permission(self):
-        return super().has_permission()
+        return super().has_permission() and Project.users.through.objects.filter(user_id=self.request.user.pk).exists()
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})
@@ -94,7 +94,7 @@ class DeleteIssue(PermissionRequiredMixin, DeleteView):
     template_name = 'issues/delete.html'
 
     def has_permission(self):
-        return super().has_permission()
+        return super().has_permission() and Project.users.through.objects.filter(user_id=self.request.user.pk).exists()
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.project.pk})

@@ -8,9 +8,10 @@ from webapp.models import Issue, Project
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'description', 'start_date', 'end_date']
+        fields = ['name', 'description', 'users', 'start_date', 'end_date']
         widgets = {
             'description': widgets.Textarea,
+            'users': widgets.CheckboxSelectMultiple,
             'start_date': widgets.SelectDateWidget,
             'end_date': widgets.SelectDateWidget
         }
