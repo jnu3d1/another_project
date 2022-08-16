@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -72,6 +73,12 @@ class ProjectUsersView(PermissionRequiredMixin, UpdateView):
     def has_permission(self):
         return super().has_permission() and Project.users.through.objects.filter(user_id=self.request.user.pk).exists()
 
-
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})
+
+
+class AllUsersView(PermissionRequiredMixin, ListView):
+    model = User
+    template_name = 'projects/users.html'
+    context_object_name = 'users'
+    permission_required = 'webapp.custom_permission'

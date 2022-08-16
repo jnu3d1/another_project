@@ -10,4 +10,8 @@
     {% for project in projects %}
         <p>{{ project.name }} <a href="{% url "webapp:project" project.pk %}">Подробнее</a></p>
     {% endfor %}
+    <hr>
+    {% if user.is_authenticated and perms.webapp.custom_permission %}
+        <p><a href="{% url "webapp:users" %}">Все пользователи</a></p>
+    {% endif %}
 {% endblock %}

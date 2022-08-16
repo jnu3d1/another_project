@@ -4,7 +4,7 @@
         {{ issue.summary }} <a href="{% url "webapp:issue" issue.pk %}">Подробнее</a>
     </p>
 {% empty %}
-    <p>В этом проекте не создано ни одной зачачи</p>
+    <p>Не создано ни одной зачачи</p>
 {% endfor %}
 {% if is_paginated %}
     {% include 'partial/pagination.html' %}
