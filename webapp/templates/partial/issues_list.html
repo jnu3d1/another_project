@@ -1,0 +1,11 @@
+<h3>Задачи {{ whose }}:</h3>
+{% for issue in issues %}
+    <p>
+        {{ issue.summary }} <a href="{% url "webapp:issue" issue.pk %}">Подробнее</a>
+    </p>
+{% empty %}
+    <p>В этом проекте не создано ни одной зачачи</p>
+{% endfor %}
+{% if is_paginated %}
+    {% include 'partial/pagination.html' %}
+{% endif %}

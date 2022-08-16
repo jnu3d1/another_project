@@ -38,14 +38,7 @@
     {% if user.is_authenticated and perms.webapp.add_issue %}
         <p><a href="{% url "webapp:create" project.pk %}">Новая задача</a></p>
     {% endif %}
-    <h3>Задачи проекта:</h3>
-    {% for issue in issues %}
-        <p>
-            {{ issue.summary }} <a href="{% url "webapp:issue" issue.pk %}">Подробнее</a>
-        </p>
-    {% empty %}
-        <p>В этом проекте не создано ни одной зачачи</p>
-    {% endfor %}
+    {% include "partial/issues_list.html" with whose="проекта" %}
     <hr>
     <p>
         <a style="color: red;" href="{% url "webapp:projects" %}"><b>На главную</b></a>

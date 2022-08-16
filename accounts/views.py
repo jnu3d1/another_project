@@ -66,15 +66,15 @@ class RegisterView(CreateView):
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     template_name = 'profile.html'
-    # paginate_by = 5
-    # paginate_orphans = 0
-    #
-    # def get_context_data(self, **kwargs):
-    #     paginator = Paginator(self.get_object().issues.all(), self.paginate_by, self.paginate_orphans)
-    #     page_number = self.request.GET.get('page', 1)
-    #     page_object = paginator.get_page(page_number)
-    #     context = super().get_context_data(**kwargs)
-    #     context['page_obj'] = page_object
-    #     context['issues'] = page_object.object_list
-    #     context['is_paginated'] = page_object.has_other_pages()
-    #     return context
+    paginate_by = 5
+    paginate_orphans = 0
+
+    def get_context_data(self, **kwargs):
+        paginator = Paginator(self.get_object().issues.all(), self.paginate_by, self.paginate_orphans)
+        page_number = self.request.GET.get('page', 1)
+        page_object = paginator.get_page(page_number)
+        context = super().get_context_data(**kwargs)
+        context['page_obj'] = page_object
+        context['issues'] = page_object.object_list
+        context['is_paginated'] = page_object.has_other_pages()
+        return context

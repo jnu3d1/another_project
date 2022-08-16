@@ -13,5 +13,5 @@
     <p>Почта: {{ user.email }}</p>
     <p>Профиль на GitHub: {{ user.profile.github_profile|default_if_none:"https://github.com/" }}</p>
     <p>О себе: {{ user.profile.description|default_if_none:"ничего не указал" }}</p>
-{#    {% include "partial/issues_list.html" with whose="пользователя" %}#}
+    {% include "partial/issues_list.html" with whose="пользователя" %}
 {% endblock %}
