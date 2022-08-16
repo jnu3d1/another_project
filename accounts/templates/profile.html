@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+    <h1>Личная страница пользователя {{ user.username }}</h1>
+    {% if user.profile.avatar %}
+        <img class="avatar" src="{{ user.profile.avatar.url }}" width="250" height="250" alt="user picture">
+    {% endif %}
+    <p>Имя пользователя: {{ user.username }}</p>
+    <p>Имя: {{ user.first_name }}</p>
+    <p>Фамилия: {{ user.last_name }}</p>
+    <p>Почта: {{ user.email }}</p>
+    <p>Профиль на GitHub: {{ user.profile.github_profile|default_if_none:"https://github.com/" }}</p>
+    <p>О себе: {{ user.profile.description|default_if_none:"ничего не указал" }}</p>
+{#    {% include "partial/issues_list.html" with whose="пользователя" %}#}
+{% endblock %}
