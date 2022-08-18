@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
@@ -71,7 +71,8 @@ class ProjectUsersView(PermissionRequiredMixin, UpdateView):
     template_name = 'projects/project_users.html'
 
     def has_permission(self):
-        return super().has_permission() and Project.users.through.objects.filter(user_id=self.request.user.pk).exists()
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        return super().has_permission() and self.request.user in project.users.all()
 
     def get_success_url(self):
         return reverse('webapp:project', kwargs={'pk': self.object.pk})
