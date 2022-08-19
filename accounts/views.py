@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
-from accounts.forms import MyUserCreationForm
+from accounts.forms import MyUserCreationForm, UserChangesForm, ProfileChangesForm
 from accounts.models import Profile
 
 
@@ -43,6 +42,9 @@ def register_view(request, *args, **kwargs):
     return render(request, 'user_create.html', context={'form': form})
 
 
+User = get_user_model()
+
+
 class RegisterView(CreateView):
     model = User
     template_name = 'user_create.html'
@@ -64,7 +66,7 @@ class RegisterView(CreateView):
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
-    model = get_user_model()
+    model = User
     template_name = 'profile.html'
     paginate_by = 5
     paginate_orphans = 0
@@ -78,3 +80,36 @@ class ProfileView(LoginRequiredMixin, DetailView):
         context['issues'] = page_object.object_list
         context['is_paginated'] = page_object.has_other_pages()
         return context
+
+
+class ProfileChangesView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserChangesForm
+    template_name = 'user_changes.html'
+    profile_changes_form_class = ProfileChangesForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'profile_changes_form' not in context:
+            context['profile_changes_form'] = self.profile_changes_form_class(instance=self.get_object().profile)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(instance=self.object, data=request.POST)
+        profile_changes_form = self.profile_changes_form_class(instance=self.object.profile, data=request.POST,
+                                                               files=request.FILES)
+        if form.is_valid():
+            return self.form_valid(form, profile_changes_form)
+        return self.form_invalid(form, profile_changes_form)
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form, profile_changes_form):
+        form.save()
+        profile_changes_form.save()
+        return redirect('accounts:profile', self.object.pk)
+
+    def form_invalid(self, form, profile_changes_form):
+        return self.render_to_response(self.get_context_data(form=form, profile_changes_form=profile_changes_form))

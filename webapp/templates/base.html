@@ -12,7 +12,7 @@
 <body>
 {% if request.user.is_authenticated %}
     <p><a href="{% url "accounts:logout" %}">Выход</a></p>
-    <p>Здравствуйте, <a href="{% url "accounts:profile" request.user.pk %}">{{ user.username }}</a></p>
+    <p>Здравствуйте, <a href="{% url "accounts:profile" request.user.pk %}">{{ request.user.username }}</a></p>
 {% else %}
     {% if request.path != "/accounts/login/" %}
         <p><a href="{% url "accounts:login" %}?next={{ request.path }}">Вход</a></p>
