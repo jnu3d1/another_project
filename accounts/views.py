@@ -1,13 +1,14 @@
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, UpdateView
 
-from accounts.forms import MyUserCreationForm, UserChangesForm, ProfileChangesForm
+from accounts.forms import MyUserCreationForm, UserChangesForm, ProfileChangesForm, PasswordChangeForm
 from accounts.models import Profile
 
 
@@ -113,3 +114,20 @@ class ProfileChangesView(LoginRequiredMixin, UpdateView):
 
     def form_invalid(self, form, profile_changes_form):
         return self.render_to_response(self.get_context_data(form=form, profile_changes_form=profile_changes_form))
+
+
+class PasswordChangeView(UpdateView):
+    model = User
+    form_class = PasswordChangeForm
+    template_name = 'change_password.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse('accounts:profile', kwargs={'pk': self.request.user.pk})
+
+    def form_valid(self, form):
+        self.object = form.save()
+        update_session_auth_hash(self.request, self.object)
+        return HttpResponseRedirect(self.get_success_url())

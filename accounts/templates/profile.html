@@ -3,7 +3,8 @@
 {% block title %}Профиль пользователя{% endblock %}
 
 {% block content %}
-    <a href="{% url "accounts:change" %}">Изменить</a>
+    <a href="{% url "accounts:change" %}">Изменить профиль</a>
+    <a href="{% url "accounts:change_password" %}">Изменить пароль</a>
     <h1>Личная страница пользователя {{ user.username }}</h1>
     {% if user.profile.avatar %}
         <img class="avatar" src="{{ user.profile.avatar.url }}" width="250" height="250" alt="user picture">
