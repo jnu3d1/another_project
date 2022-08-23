@@ -5,7 +5,7 @@ from webapp.views import *
 app_name = 'webapp'
 
 urlpatterns = [
-    # path('', IndexView.as_view(), name='index'),
+    path('index/', IndexView.as_view(), name='index'),
     path('issue/<int:pk>/', IssueView.as_view(), name='issue'),
     path('project/<int:pk>/issues/add/', CreateIssue.as_view(), name='create'),
     path('issue/<int:pk>/editing/', EditIssue.as_view(), name='edit'),
