@@ -41,6 +41,9 @@ class CreateProject(CreateView):
     def form_valid(self, form):
         author = self.request.user
         form.instance.author = author
+        # response = super().form_valid(form)
+        # self.object.users.add(author)
+        # return response
         return super().form_valid(form)
 
     def get_success_url(self):
