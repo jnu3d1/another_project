@@ -1,44 +1,48 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponse
+from rest_framework.response import Response
 from django.shortcuts import render
 from django.views import View
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
+from rest_framework.views import APIView
 
 from api_2.serializers import ProjectSerializer, ProjectModelSerializer
 from webapp.models import Project
 
 
 # Create your views here.
-class ProjectsView(View):
+
+
+class ProjectsView(APIView):
+    serializer_class = ProjectModelSerializer
+
     def get(self, request, *args, **kwargs):
-        projects = Project.objects.all()
-        projects_fields = ProjectModelSerializer(projects, many=True).data
-        return JsonResponse(projects_fields, safe=False)
+        if self.kwargs:
+            project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+            projects_data = self.serializer_class(project).data
+            return Response(projects_data)
+        else:
+            projects = Project.objects.all()
+            projects_data = self.serializer_class(projects, many=True).data
+            return Response(projects_data)
 
     def post(self, request, *args, **kwargs):
-        if request.body:
-            data = json.loads(request.body)
-            serializer = ProjectSerializer(data=data)
-            try:
-                serializer.is_valid(raise_exception=True)
-                # Project.objects.create(**serializer.validated_data)
-                serializer.save()
-                return JsonResponse(serializer.data)
-            except ValidationError as error:
-                return JsonResponse({'error': serializer.errors}, status=400)
-        return JsonResponse({'message': 'Error'}, status=400)
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=201)
 
     def put(self, request, *args, pk, **kwargs):
         project = get_object_or_404(Project, pk=pk)
-        if request.body:
-            data = json.loads(request.body)
-            serializer = ProjectSerializer(data=data, instance=project)
-            try:
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-                return JsonResponse(serializer.data)
-            except ValidationError as error:
-                return JsonResponse({'error': serializer.errors}, status=400)
-        return JsonResponse({'message': 'Error'}, status=400)
+        serializer = self.serializer_class(data=request.data, instance=project)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, *args, **kwargs):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        project.delete()
+        return JsonResponse({'message': 'Проект удалён'})
+
