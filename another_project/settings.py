@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webapp',
     'accounts',
+    'api_1',
 ]
 
 MIDDLEWARE = [
