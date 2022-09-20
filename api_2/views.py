@@ -6,16 +6,15 @@ from django.views import View
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 
-from api_2.serializers import ProjectSerializer
+from api_2.serializers import ProjectSerializer, ProjectModelSerializer
 from webapp.models import Project
 
 
 # Create your views here.
 class ProjectsView(View):
-
     def get(self, request, *args, **kwargs):
         projects = Project.objects.all()
-        projects_fields = ProjectSerializer(projects, many=True).data
+        projects_fields = ProjectModelSerializer(projects, many=True).data
         return JsonResponse(projects_fields, safe=False)
 
     def post(self, request, *args, **kwargs):

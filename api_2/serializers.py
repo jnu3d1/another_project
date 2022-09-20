@@ -19,3 +19,10 @@ class ProjectSerializer(serializers.Serializer):
             setattr(instance, field, value)
         instance.save()
         return instance
+
+
+class ProjectModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
+        read_only_fields = ('id',)
