@@ -21,6 +21,7 @@ from django.conf import settings
 
 api_urls = [
     path('vers1/', include('api_1.urls')),
+    path('vers2/', include('api_2.urls')),
 ]
 
 urlpatterns = [
