@@ -1,14 +1,9 @@
-import json
-
-from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponse
+from django.http import JsonResponse
 from rest_framework.response import Response
-from django.shortcuts import render
-from django.views import View
-from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 
-from api_2.serializers import ProjectSerializer, ProjectModelSerializer
+from api_2.serializers import ProjectModelSerializer
 from webapp.models import Project
 
 
@@ -45,4 +40,3 @@ class ProjectsView(APIView):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         project.delete()
         return JsonResponse({'message': 'Проект удалён'})
-
